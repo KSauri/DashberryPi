@@ -5,7 +5,9 @@
   "main": "main.js",
   "dependencies": {
     "react": "^15.5.4",
-    "react-dom": "^15.5.4"
+    "react-dom": "^15.5.4",
+    "react-router": "^4.1.0",
+    "redux": "^3.6.0"
   },
   "devDependencies": {
     "electron": "^1.6.2",
@@ -19,7 +21,7 @@
     "eject": "react-scripts eject",
     "electron": "electron .",
     "electron-dev": "ELECTRON_START_URL=http://localhost:3000 electron .",
-    "dev" : "nf start -p 3000"
+    "dev": "nf start -p 3000"
   },
   "homepage": "./"
 }
