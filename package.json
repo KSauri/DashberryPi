@@ -9,12 +9,22 @@
     "babel-preset-react": "^6.24.1",
     "bootstrap": "^3.3.7",
     "css-modules-electron": "^2.0.0",
+    "dotenv": "^4.0.0",
     "electron-compile": "^6.4.0",
+    "electron-google-oauth": "^2.0.0",
+    "electron-json-storage": "^3.0.5",
+    "electron-prebuilt-compile": "^1.6.2",
+    "font-awesome": "^4.7.0",
+    "googleapis": "^19.0.0",
+    "lodash": "^4.17.4",
+    "moment": "^2.18.1",
+    "query-string": "^4.3.2",
     "react": "^15.5.4",
     "react-bootstrap": "^0.30.8",
     "react-dom": "^15.5.4",
     "react-router": "^4.1.0",
-    "redux": "^3.6.0"
+    "redux": "^3.6.0",
+    "request-promise": "^4.2.0"
   },
   "devDependencies": {
     "electron": "^1.6.2",
