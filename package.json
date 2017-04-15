@@ -5,6 +5,7 @@
   "main": "main.js",
   "dependencies": {
     "bootstrap": "^3.3.7",
+    "googleapis": "^19.0.0",
     "react": "^15.5.4",
     "react-bootstrap": "^0.30.8",
     "react-dom": "^15.5.4",
