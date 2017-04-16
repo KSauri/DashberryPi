@@ -3,16 +3,28 @@ import { Col } from 'react-bootstrap';
 import logo from './logo.svg';
 import './css/App.css';
 import APIController from './lib/APIController.js';
+import Transit from './components/right_pane/commute_information/transit';
+import GoogleTransit from './lib/GoogleTransit';
+
 
 class App extends Component {
   constructor(props) {
     super(props);
-    APIController.getAllData(this.setState);
-    this.Calucate
+    this.state = {
+      transit: "apples"
+    };
   }
-  getWeatherMap() {
 
+  getTransit() {
+    let gt = new GoogleTransit("3 Old Army Road, Bernardsville","160 Varick Street, New York");
+    gt.getParsedDuration().then(distance =>
+      this.setState({ transit: distance }));
   }
+
+  componentDidMount() {
+    this.getTransit();
+  }
+
   render() {
     return (
       <div className="App">
@@ -25,6 +37,7 @@ class App extends Component {
         </Col>
         <Col sm={4}>
           <h3>Subheader </h3>
+          <Transit distance={ this.state.transit } />
         </Col>
       </div>
     );
