@@ -1,7 +1,5 @@
 import React, { Component } from 'react';
 import { Col } from 'react-bootstrap';
-import logo from './logo.svg';
-import './css/App.css';
 
 class App extends Component {
   render() {
