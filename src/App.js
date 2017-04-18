@@ -11,14 +11,20 @@ class App extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      transit: "apples"
+      durationNow: "",
+      durationNormal: "",
+      arrivalNow: "",
+      arrivalNormal: ""
     };
   }
 
-  getTransit() {
-    let gt = new GoogleTransit("3 Old Army Road, Bernardsville","160 Varick Street, New York");
-    gt.getParsedDuration().then(distance =>
-      this.setState({ transit: distance }));
+  async getTransit() {
+    let gt = new GoogleTransit("3 Old Army Road, Bernardsville","160 Varick Street, New York",7);
+    let data = await gt.getData();
+    this.setState({ durationNow: data.durationNow,
+      durationNormal: data.durationNormal,
+      arrivalNow: data.arrivalNow,
+      arrivalNormal: data.arrivalNormal });
   }
 
   componentDidMount() {
@@ -37,7 +43,10 @@ class App extends Component {
         </Col>
         <Col sm={4}>
           <h3>Subheader </h3>
-          <Transit distance={ this.state.transit } />
+          <Transit durationNow={ this.state.durationNow }
+            durationNormal={ this.state.durationNormal }
+            arrivalNormal={ this.state.arrivalNormal }
+            arrivalNow={ this.state.arrivalNow }/>
         </Col>
       </div>
     );

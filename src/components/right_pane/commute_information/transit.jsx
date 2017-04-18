@@ -11,7 +11,10 @@ class Transit extends Component {
   render() {
     return (
       <div className="transit">
-        <h4>Travel Duration: { this.props.distance } </h4>
+        <h4>Travel Duration Now: { this.props.durationNow } </h4>
+        <h4>Arrival Now: { this.props.arrivalNow } </h4>
+        <h4>Travel Duration Normal: { this.props.durationNormal } </h4>
+        <h4>Arrival Normal: { this.props.arrivalNormal } </h4>
       </div>
     );
   }
