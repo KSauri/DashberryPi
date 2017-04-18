@@ -10,10 +10,9 @@ class App extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      durationNow: "",
-      durationNormal: "",
-      arrivalNow: "",
-      arrivalNormal: "",
+      transitData: {
+        isLoading: true
+      },
       eventData: {
         isLoading: true
       }
@@ -21,23 +20,24 @@ class App extends Component {
     this.getEventData();
   }
 
-  async getTransit() {
+  async getTransitData() {
     let gt = new GoogleTransit("3 Old Army Road, Bernardsville","160 Varick Street, New York",7);
     let data = await gt.getData();
-    this.setState({ durationNow: data.durationNow,
-      durationNormal: data.durationNormal,
-      arrivalNow: data.arrivalNow,
-      arrivalNormal: data.arrivalNormal });
+    this.setState({
+      transitData: {
+      isLoading: false,
+      data
+      }
+    });
   }
 
   componentDidMount() {
-    this.getTransit();
+    this.getTransitData();
   }
 
   async getEventData() {
     const gc = new GoogleCalendar();
     let data = await gc.getData();
-    console.log(data);
     this.setState({
       eventData: {
         isLoading: false,
@@ -57,10 +57,7 @@ class App extends Component {
           <EventsSummary isLoading={this.state.eventData.isLoading} data={this.state.eventData.data || []} />
         </Col>
         <Col sm={4}>
-          <Transit durationNow={ this.state.durationNow }
-            durationNormal={ this.state.durationNormal }
-            arrivalNormal={ this.state.arrivalNormal }
-            arrivalNow={ this.state.arrivalNow }/>
+          <Transit isLoading={this.state.transitData.isLoading} data={this.state.transitData.data || []}/>
         </Col>
       </div>
     );
