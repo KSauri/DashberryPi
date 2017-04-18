@@ -39,7 +39,7 @@ class App extends Component {
           <h3>Subheader </h3>
         </Col>
         <Col sm={4}>
-          <h3>Subheader </h3>
+          <EventsSummary isLoading={this.state.eventData.isLoading} data={this.state.eventData.data || []} />
         </Col>
         <Col sm={4}>
           <h3>Subheader </h3>
