@@ -4,6 +4,8 @@ import GoogleCalendar from './lib/GoogleCalendar.js';
 import RssReader from './lib/RssReader.js';
 import EventsSummary from './components/EventsSummary.jsx';
 import NewsSummary from './components/NewsSummary.jsx';
+import getRandomImage from './lib/getRandomImage.js';
+
 
 class App extends Component {
   constructor(props) {
@@ -28,6 +30,7 @@ class App extends Component {
     }
     this.getEventData();
     this.getTopStories();
+    this.setBackground();
   }
   async getTopStories() {
     const sources = {
@@ -55,6 +58,10 @@ class App extends Component {
         data
       }
     });
+  }
+  async setBackground() {
+    const image = await getRandomImage();
+    document.body.style = `background-image: url(${image});background-size:cover;`;
   }
   render() {
     return (
