@@ -9,7 +9,7 @@ export default class GoogleTransit {
     this.departTime = departTime;
   }
 
-  _getDepartTimeUnixEpoch () {
+  getDepartTimeUnixEpoch () {
     let now = moment().valueOf();
     let departTimeToday = moment().startOf('day').add(this.departTime, 'h').valueOf()/1000;
     let departTimeTomorrow = moment().startOf('day').add(this.departTime + 24, 'h').valueOf()/1000;
@@ -20,23 +20,23 @@ export default class GoogleTransit {
       }
   }
   async getData() {
-    const normal = await this._getDataDepartNormal();
-    const now = await this._getDataDepartNow();
+    const normal = await this.getDataDepartNormal();
+    const now = await this.getDataDepartNow();
     return {
       distance: normal.routes[0].legs[0].distance.text,
       durationNow: now.routes[0].legs[0].duration.text,
-      arrivalNow: now.routes[0].legs[0].arrival_time.text,
+      arrivalNow: now.routes[0].legs[0].arrivaltime.text,
       durationNormal: normal.routes[0].legs[0].duration.text,
-      arrivalNormal: normal.routes[0].legs[0].arrival_time.text,
+      arrivalNormal: normal.routes[0].legs[0].arrivaltime.text,
     };
   }
-  async _getDataDepartNormal() {
+  async getDataDepartNormal() {
     try {
       let data = await rp({
         method: "GET",
         url: `https://maps.googleapis.com/maps/api/directions/json?` +
           `origin=${this.origin}&destination=${this.destination}&` +
-          `departure_time=${this._getDepartTimeUnixEpoch()}&mode=transit` +
+          `departuretime=${this.getDepartTimeUnixEpoch()}&mode=transit` +
           `&key=AIzaSyCyVBmd0JigVvVazx5O6e3OHwopFn0tklY`,
         json: true
       });
@@ -45,7 +45,7 @@ export default class GoogleTransit {
       console.error(err);
     }
   }
-  async _getDataDepartNow() {
+  async getDataDepartNow() {
     try {
       let data = await rp({
         method: "GET",
@@ -60,25 +60,4 @@ export default class GoogleTransit {
     }
   }
 
-
-  // async getParsedDistance() {
-  //   let rawData = await this._getDataDepartNow();
-  //   return rawData.routes[0].legs[0].distance.text;
-  // }
-  // async getParsedDurationNormal() {
-  //   let rawData = await this._getDataDepartNormal();
-  //   return rawData.routes[0].legs[0].duration.text;
-  // }
-  // async getParsedDurationNow() {
-  //   let rawData = await this._getDataDepartNow();
-  //   return rawData.routes[0].legs[0].duration.text;
-  // }
-  // async getParsedArrivalNow() {
-  //   let rawData = await this._getDataDepartNow();
-  //   return rawData.routes[0].legs[0].arrival_time.text;
-  // }
-  // async getParsedArrivalNormal() {
-  //   let rawData = await this._getDataDepartNormal();
-  //   return rawData.routes[0].legs[0].arrival_time.text;
-  // }
 }
