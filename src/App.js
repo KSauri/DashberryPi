@@ -5,12 +5,17 @@ import RssReader from './lib/RssReader.js';
 import EventsSummary from './components/EventsSummary.jsx';
 import NewsSummary from './components/NewsSummary.jsx';
 import getRandomImage from './lib/getRandomImage.js';
+import Transit from './components/right_pane/commute_information/transit';
+import GoogleTransit from './lib/GoogleTransit';
 
 
 class App extends Component {
   constructor(props) {
     super(props);
     this.state = {
+      transitData: {
+        isLoading: true
+      },
       eventData: {
         isLoading: true,
         data: []
@@ -27,10 +32,11 @@ class App extends Component {
         isLoading: true,
         data: {}
       }
-    }
+    };
     this.getEventData();
     this.getTopStories();
     this.setBackground();
+    this.getTransitData();
   }
   async getTopStories() {
     const sources = {
@@ -49,6 +55,18 @@ class App extends Component {
       })
     })
   }
+
+  async getTransitData() {
+    let gt = new GoogleTransit("3 Old Army Road, Bernardsville","160 Varick Street, New York",7);
+    let data = await gt.getData();
+    this.setState({
+      transitData: {
+      isLoading: false,
+      data
+      }
+    });
+  }
+
   async getEventData() {
     const gc = new GoogleCalendar();
     let data = await gc.getData();
@@ -59,6 +77,9 @@ class App extends Component {
       }
     });
   }
+
+
+
   async setBackground() {
     const image = await getRandomImage();
     document.body.style = `background-image: url(${image});background-size:cover;`;
@@ -70,13 +91,13 @@ class App extends Component {
           <h3>Subheader </h3>
         </Col>
         <Col sm={4}>
-          <NewsSummary source='BBC' data={this.state.bbc.data} isLoading={this.state.bbc.isLoading} />
-          <NewsSummary source='NYT' data={this.state.nyt.data} isLoading={this.state.nyt.isLoading} />
-          <NewsSummary source='WNYC' data={this.state.wnyc.data} isLoading={this.state.wnyc.isLoading} />
-          <EventsSummary isLoading={this.state.eventData.isLoading} data={this.state.eventData.data} />
         </Col>
+        <NewsSummary source='BBC' data={this.state.bbc.data} isLoading={this.state.bbc.isLoading} />
+        <NewsSummary source='NYT' data={this.state.nyt.data} isLoading={this.state.nyt.isLoading} />
+        <NewsSummary source='WNYC' data={this.state.wnyc.data} isLoading={this.state.wnyc.isLoading} />
+        <EventsSummary isLoading={this.state.eventData.isLoading} data={this.state.eventData.data} />
         <Col sm={4}>
-          <h3>Subheader </h3>
+          <Transit isLoading={this.state.transitData.isLoading} data={this.state.transitData.data || []}/>
         </Col>
       </div>
     );
