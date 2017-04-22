@@ -36,6 +36,7 @@ class App extends Component {
     this.getEventData();
     this.getTopStories();
     this.setBackground();
+    this.getTransitData();
   }
   async getTopStories() {
     const sources = {
@@ -66,10 +67,6 @@ class App extends Component {
     });
   }
 
-  componentDidMount() {
-    this.getTransitData();
-  }
-
   async getEventData() {
     const gc = new GoogleCalendar();
     let data = await gc.getData();
@@ -80,14 +77,13 @@ class App extends Component {
       }
     });
   }
-<<<<<<< HEAD
 
-=======
+
+
   async setBackground() {
     const image = await getRandomImage();
     document.body.style = `background-image: url(${image});background-size:cover;`;
   }
->>>>>>> 00c8d24f1d5e3a87fe04c1611438d983915fbcd2
   render() {
     return (
       <div className="App">
@@ -95,11 +91,11 @@ class App extends Component {
           <h3>Subheader </h3>
         </Col>
         <Col sm={4}>
-          <NewsSummary source='BBC' data={this.state.bbc.data} isLoading={this.state.bbc.isLoading} />
-          <NewsSummary source='NYT' data={this.state.nyt.data} isLoading={this.state.nyt.isLoading} />
-          <NewsSummary source='WNYC' data={this.state.wnyc.data} isLoading={this.state.wnyc.isLoading} />
-          <EventsSummary isLoading={this.state.eventData.isLoading} data={this.state.eventData.data} />
         </Col>
+        <NewsSummary source='BBC' data={this.state.bbc.data} isLoading={this.state.bbc.isLoading} />
+        <NewsSummary source='NYT' data={this.state.nyt.data} isLoading={this.state.nyt.isLoading} />
+        <NewsSummary source='WNYC' data={this.state.wnyc.data} isLoading={this.state.wnyc.isLoading} />
+        <EventsSummary isLoading={this.state.eventData.isLoading} data={this.state.eventData.data} />
         <Col sm={4}>
           <Transit isLoading={this.state.transitData.isLoading} data={this.state.transitData.data || []}/>
         </Col>

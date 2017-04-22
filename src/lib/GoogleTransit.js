@@ -22,7 +22,6 @@ export default class GoogleTransit {
   async getData() {
     const normal = await this.getDataDepartNormal();
     const now = await this.getDataDepartNow();
-    console.log(process.env);
     let returnObject = {
       distance: normal.routes[0].legs[0].distance.text,
       durationNow: now.routes[0].legs[0].duration.text,
