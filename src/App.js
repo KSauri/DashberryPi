@@ -1,10 +1,13 @@
 import React, { Component } from 'react';
 import { Col } from 'react-bootstrap';
-import APIController from './lib/APIController.js';
+import GoogleCalendar from './lib/GoogleCalendar.js';
+import RssReader from './lib/RssReader.js';
+import EventsSummary from './components/EventsSummary.jsx';
+import NewsSummary from './components/NewsSummary.jsx';
+import getRandomImage from './lib/getRandomImage.js';
 import Transit from './components/right_pane/commute_information/transit';
 import GoogleTransit from './lib/GoogleTransit';
-import EventsSummary from './components/EventsSummary';
-import GoogleCalendar from './lib/GoogleCalendar.js';
+
 
 class App extends Component {
   constructor(props) {
@@ -14,10 +17,42 @@ class App extends Component {
         isLoading: true
       },
       eventData: {
-        isLoading: true
+        isLoading: true,
+        data: []
+      },
+      bbc: {
+        isLoading: true,
+        data: {}
+      },
+      wnyc: {
+        isLoading: true,
+        data: {}
+      },
+      nyt: {
+        isLoading: true,
+        data: {}
       }
     };
     this.getEventData();
+    this.getTopStories();
+    this.setBackground();
+  }
+  async getTopStories() {
+    const sources = {
+      'BBC': 'http://feeds.bbci.co.uk/news/rss.xml?edition=us',
+      'NYT': 'http://rss.nytimes.com/services/xml/rss/nyt/HomePage.xml',
+      'WNYC': 'http://www.wnyc.org/feeds/all/'
+    };
+    Object.keys(sources).forEach(async (source) => {
+      const reader = new RssReader(sources[source]);
+      const data = await reader.getLatest();
+      this.setState({
+        [source.toLowerCase()] : {
+          isLoading: false,
+          data
+        }
+      })
+    })
   }
 
   async getTransitData() {
@@ -45,16 +80,25 @@ class App extends Component {
       }
     });
   }
+<<<<<<< HEAD
 
+=======
+  async setBackground() {
+    const image = await getRandomImage();
+    document.body.style = `background-image: url(${image});background-size:cover;`;
+  }
+>>>>>>> 00c8d24f1d5e3a87fe04c1611438d983915fbcd2
   render() {
     return (
       <div className="App">
-        <h1>Holy Butt Dashboard</h1>
         <Col sm={4}>
           <h3>Subheader </h3>
         </Col>
         <Col sm={4}>
-          <EventsSummary isLoading={this.state.eventData.isLoading} data={this.state.eventData.data || []} />
+          <NewsSummary source='BBC' data={this.state.bbc.data} isLoading={this.state.bbc.isLoading} />
+          <NewsSummary source='NYT' data={this.state.nyt.data} isLoading={this.state.nyt.isLoading} />
+          <NewsSummary source='WNYC' data={this.state.wnyc.data} isLoading={this.state.wnyc.isLoading} />
+          <EventsSummary isLoading={this.state.eventData.isLoading} data={this.state.eventData.data} />
         </Col>
         <Col sm={4}>
           <Transit isLoading={this.state.transitData.isLoading} data={this.state.transitData.data || []}/>
