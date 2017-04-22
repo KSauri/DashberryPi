@@ -57,7 +57,7 @@ class App extends Component {
   }
 
   async getTransitData() {
-    let gt = new GoogleTransit("3 Old Army Road, Bernardsville","160 Varick Street, New York",7);
+    let gt = new GoogleTransit("3 Old Army Road, Bernardsville","160 Varick Street, New York", 7);
     let data = await gt.getData();
     this.setState({
       transitData: {

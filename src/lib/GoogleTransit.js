@@ -10,7 +10,7 @@ export default class GoogleTransit {
   }
 
   getDepartTimeUnixEpoch () {
-    let now = moment().valueOf();
+    let now = moment().valueOf()/1000;
     let departTimeToday = moment().startOf('day').add(this.departTime, 'h').valueOf()/1000;
     let departTimeTomorrow = moment().startOf('day').add(this.departTime + 24, 'h').valueOf()/1000;
     if (now > departTimeToday) {
@@ -32,12 +32,13 @@ export default class GoogleTransit {
     return returnObject;
   }
   async getDataDepartNormal() {
+    const departTime = this.getDepartTimeUnixEpoch();
     try {
       let data = await rp({
         method: "GET",
         url: `https://maps.googleapis.com/maps/api/directions/json?` +
           `origin=${this.origin}&destination=${this.destination}&` +
-          `departuretime=${this.getDepartTimeUnixEpoch()}&mode=transit` +
+          `departure_time=${this.getDepartTimeUnixEpoch()}&mode=transit` +
           `&key=${process.env.TRANSIT_KEY}`,
         json: true
       });
