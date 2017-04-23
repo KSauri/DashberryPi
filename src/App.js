@@ -5,6 +5,7 @@ import RssReader from './lib/RssReader.js';
 import EventsSummary from './components/EventsSummary.jsx';
 import NewsSummary from './components/NewsSummary.jsx';
 import getRandomImage from './lib/getRandomImage.js';
+import WeatherMap from './components/right_pane/weather_map.jsx';
 
 
 class App extends Component {
@@ -76,7 +77,7 @@ class App extends Component {
           <EventsSummary isLoading={this.state.eventData.isLoading} data={this.state.eventData.data} />
         </Col>
         <Col sm={4}>
-          <h3>Subheader </h3>
+          <WeatherMap />
         </Col>
       </div>
     );
