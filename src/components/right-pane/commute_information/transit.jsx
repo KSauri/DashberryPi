@@ -46,9 +46,9 @@ class Transit extends Component {
       return (
         <Panel>
           <div className="transit">
-            <h4>Travel Duration Now: { this.state.data.durationNow } </h4>
+            <h4>Leave Now: { this.state.data.durationNow } </h4>
             <h4>Arrival Now: { this.state.data.arrivalNow } </h4>
-            <h4>Travel Duration Normal: { this.state.data.durationNormal } </h4>
+            <h4>Leave Normal: { this.state.data.durationNormal } </h4>
             <h4>Arrival Normal: { this.state.data.arrivalNormal } </h4>
           </div>
         </Panel>

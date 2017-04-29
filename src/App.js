@@ -4,6 +4,7 @@ import EventsSummary from './components/center-pane/EventsSummary.jsx';
 import NewsSummaries from './components/center-pane/NewsSummaries.jsx';
 import getRandomImage from './lib/getRandomImage.js';
 import Transit from './components/right-pane/commute_information/transit';
+import HealthSummary from './components/left-pane/HealthSummary.jsx';
 
 
 class App extends Component {
@@ -19,7 +20,7 @@ class App extends Component {
     return (
       <div className="App">
         <Col sm={4}>
-          <h3 className="white-header">Subheader </h3>
+          <HealthSummary />
         </Col>
         <Col sm={4}>
           <NewsSummaries />
