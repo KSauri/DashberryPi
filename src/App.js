@@ -57,7 +57,7 @@ class App extends Component {
   }
 
   async getTransitData() {
-    let gt = new GoogleTransit("3 Old Army Road, Bernardsville","160 Varick Street, New York",7);
+    let gt = new GoogleTransit("3 Old Army Road, Bernardsville","160 Varick Street, New York", 7);
     let data = await gt.getData();
     this.setState({
       transitData: {
@@ -91,11 +91,11 @@ class App extends Component {
           <h3>Subheader </h3>
         </Col>
         <Col sm={4}>
-          <NewsSummary source='BBC' data={this.state.bbc.data} isLoading={this.state.bbc.isLoading} />
-          <NewsSummary source='NYT' data={this.state.nyt.data} isLoading={this.state.nyt.isLoading} />
-          <NewsSummary source='WNYC' data={this.state.wnyc.data} isLoading={this.state.wnyc.isLoading} />
-          <EventsSummary isLoading={this.state.eventData.isLoading} data={this.state.eventData.data} />
         </Col>
+        <NewsSummary source='BBC' data={this.state.bbc.data} isLoading={this.state.bbc.isLoading} />
+        <NewsSummary source='NYT' data={this.state.nyt.data} isLoading={this.state.nyt.isLoading} />
+        <NewsSummary source='WNYC' data={this.state.wnyc.data} isLoading={this.state.wnyc.isLoading} />
+        <EventsSummary isLoading={this.state.eventData.isLoading} data={this.state.eventData.data} />
         <Col sm={4}>
           <Transit isLoading={this.state.transitData.isLoading} data={this.state.transitData.data || []}/>
         </Col>
