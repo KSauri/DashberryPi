@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import GoogleTransit from '../../../lib/GoogleTransit';
-import { Panel } from 'react-bootstrap';
+import { Panel, ListGroup, ListGroupItem, Col } from 'react-bootstrap';
 
 class Transit extends Component {
   constructor(props) {
@@ -38,19 +38,35 @@ class Transit extends Component {
     );
   }
   render() {
-    if (this.state.isLoading) {
+    const { isLoading, hasError, errorMessage, data } = this.state;
+    if (isLoading) {
       return this.spinner();
-    } else if (this.state.hasError) {
-      return this.getErrorMessage(this.state.errorMessage);
+    } else if (hasError) {
+      return this.getErrorMessage(errorMessage);
     } else {
       return (
         <Panel>
-          <div className="transit">
-            <h4>Travel Duration Now: { this.state.data.durationNow } </h4>
-            <h4>Arrival Now: { this.state.data.arrivalNow } </h4>
-            <h4>Travel Duration Normal: { this.state.data.durationNormal } </h4>
-            <h4>Arrival Normal: { this.state.data.arrivalNormal } </h4>
-          </div>
+          <h5>Time to get to <b>160 Varick Street, New York</b></h5>
+          <ListGroup fill className="transit">
+            <ListGroupItem  >
+              <div className="leave-time">
+                <p>Leave Now</p>
+              </div>
+              <div className="leave-data">
+                <p>{ data.durationNow }</p>
+                <p>{ data.arrivalNow }</p>
+              </div>
+            </ListGroupItem>
+            <ListGroupItem >
+              <div className="leave-time">
+                <p>Leave at 9 AM</p>
+              </div>
+              <div className="leave-data">
+                <p>{ data.durationNormal }</p>
+                <p>{ data.arrivalNormal }</p>
+              </div>
+            </ListGroupItem>
+          </ListGroup>
         </Panel>
       );
     }
