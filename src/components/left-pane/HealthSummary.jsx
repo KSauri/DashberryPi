@@ -13,17 +13,30 @@ export default class HealthSummary extends React.Component {
   }
   async getData() {
     const fitbit = new Fitbit();
-    let data = await fitbit.getData();
-    this.setState({
-      isLoading: false,
-      stepData: data
-    })
+    try {
+      let data = await fitbit.getData();
+      this.setState({
+        isLoading: false,
+        stepData: data
+      })
+    } catch (err) {
+      this.setState({
+        isLoading: false,
+        error: true,
+        errorMessage: err.message
+      })
+    }
   }
   render() {
     return (
       <div>
         <h4 className="white-header">Steps Per Day</h4>
-        <StepCount isLoading={this.state.isLoading} stepData={this.state.stepData} />
+        <StepCount
+          isLoading={this.state.isLoading}
+          stepData={this.state.stepData}
+          error={this.state.error}
+          errorMessage={this.state.errorMessage}
+        />
       </div>
     )
   }

@@ -37,29 +37,24 @@ export default class FitBit {
     } catch (err) {
       // the file doesn't exist
     }
-
     if (!data) {
       data = await this.getNewToken()
       await fs.writeFileAsync(dataPath, JSON.stringify(data));
-    } else if (data.expires_at > moment().valueOf()) {
-      data = this.getNewToken(data.access_token, data.refresh_token);
+    } else if (data.expires_at < moment().valueOf()) {
+      data = await this.getNewToken(data.access_token, data.refresh_token);
       await fs.writeFileAsync(dataPath, JSON.stringify(data));
     }
-
     return data;
   }
   async getNewToken(accessToken, refreshToken) {
     let tokenData;
     if(!refreshToken) {
-
       let authCode = await this.getAuthCode();
       tokenData = await this.client.getAccessToken(authCode, 'http://localhost:8080');
     } else {
-
       tokenData = await this.client.refreshAccessToken(accessToken, refreshToken);
     }
-    tokenData.expires_at = moment().add(tokenData.expires_in);
-
+    tokenData.expires_at = moment().add(tokenData.expires_in).valueOf();
     return tokenData;
 
   }

@@ -3,9 +3,15 @@ import { Panel } from 'react-bootstrap';
 import BarChart from 'react-bar-chart';
 import moment from 'moment';
 
-export default function StepCount({ isLoading, stepData }) {
+export default function StepCount({ isLoading, stepData, error, errorMessage }) {
   let content;
-  if(isLoading) {
+  if (error) {
+    content = (
+      <Panel bsStyle="danger" className="text-danger">
+        <i className="fa fa-exclamation fa-fw"></i> {errorMessage || "Something went wrong"}
+      </Panel>
+    )
+  } else if(isLoading) {
     content = (
       <i className="fa fa-refresh fa-spin fa-fw"></i>
     );
