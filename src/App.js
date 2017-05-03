@@ -14,7 +14,7 @@ class App extends Component {
   }
   async setBackground() {
     const image = await getRandomImage();
-    document.body.style = `background-image: url(${image});background-size:cover;`;
+    document.body.style = `background-image: url(${image});background-size:cover;height:480px;`;
   }
   render() {
     return (
